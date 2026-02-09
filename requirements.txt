@@ -1,0 +1,20 @@
+# --- Core Framework ---
+fastapi
+uvicorn
+pydantic
+pydantic[email]
+python-multipart
+
+# --- Database & Auth ---
+sqlalchemy
+aiosqlite
+passlib[bcrypt]
+bcrypt==4.0.1
+
+# --- Testing & Quality ---
+pytest
+pytest-asyncio
+pytest-cov
+httpx
+pylint
+email-validator

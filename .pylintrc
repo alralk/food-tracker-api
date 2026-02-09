@@ -1,0 +1,9 @@
+[MASTER]
+
+
+[DESIGN]
+# because of orm methods
+min-public-methods=0
+
+[TYPECHECK]
+ignored-modules=pydantic,sqlalchemy
