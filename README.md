@@ -41,7 +41,7 @@ Food Tracker е уеб приложение, разработено като п�
 
 ### 2. Стартиране на API сървъра
 ```bash
-      pip install fastapi_app.py
+      uvicorn fastapi_app:app --reload
 ```
 ### 3. Стартиране на Dashboard-a
  - в отделен терминал:
