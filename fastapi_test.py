@@ -43,9 +43,10 @@ async def get_token_header(client, username, password):
     """Helper to get token header"""
     response = await client.post(
         "/login",
-        json={"username": username, "password": password},
+        data={"username": username, "password": password},
     )
-    token = response.json()["access_token"]
+    result=response.json()
+    token=result["access_token"]
     return {"Authorization": f"Bearer {token}"}
 
 
@@ -65,7 +66,7 @@ async def test_register_and_login(client):
     # 2. Login
     login_resp = await client.post(
         "/login",
-        json={"username": "tester", "password": "password123"},
+        data={"username": "tester", "password": "password123"},
     )
     assert login_resp.status_code == 200
     assert "access_token" in login_resp.json()
