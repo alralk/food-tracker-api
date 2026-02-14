@@ -1,18 +1,20 @@
 """
 FastAPI Application for Food Tracker.
-Demonstrates CRUD operations with OAuth2 authentication
+Demonstrates CRUD operations with bearer token auth
 """
 
 from contextlib import asynccontextmanager
 from datetime import datetime
 from typing import List, Optional
 
-from fastapi import FastAPI, HTTPException, Depends, status, Header
+from fastapi import FastAPI, HTTPException, Depends, status
+from fastapi.security import OAuth2PasswordRequestForm,OAuth2PasswordBearer
 
 import schemas
 import db_models
 from db import DatabaseService
 
+oauth2=OAuth2PasswordBearer(tokenUrl="login")
 # --- Database Setup ---
 _db_instance = DatabaseService()
 
@@ -42,14 +44,11 @@ async def get_db() -> DatabaseService:
     return _db_instance
 
 async def get_current_user(
-    authorization: str | None = Header(None),
+    token: str = Depends(oauth2),
     db: DatabaseService = Depends(get_db)
-):
+)-> db_models.User:
     """get current user based on token in Authorization header."""
-    if authorization is None or not authorization.startswith("Bearer "):
-        raise HTTPException(status_code=401, detail="Invalid token")
 
-    token = authorization.split(" ")[1]
     user = await db.get_user_by_username(token)
 
     if not user:
@@ -62,7 +61,7 @@ async def get_current_user(
 
 @app.post("/login")
 async def login(
-    data: schemas.LoginRequest,
+    data: OAuth2PasswordRequestForm = Depends(),
     db: DatabaseService = Depends(get_db)
 ):
     """login"""
