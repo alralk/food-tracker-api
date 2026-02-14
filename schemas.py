@@ -28,10 +28,7 @@ class UserResponse(BaseModel):
     is_admin: bool
     created_at: datetime
 
-class LoginRequest(BaseModel):
-    """schema for user login."""
-    username: str
-    password: str
+
 
 
 # ==================== CATEGORY SCHEMAS ====================
