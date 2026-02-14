@@ -22,7 +22,7 @@ if st.session_state.token is None:
             try:
                 response = requests.post(
                     f"{API_URL}/login",
-                    json={"username": username, "password": password},
+                    data={"username": username, "password": password},
                     timeout=5
                 )
                 if response.status_code == 200:
